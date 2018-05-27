@@ -1,13 +1,61 @@
+// C++学习.cpp: 定义控制台应用程序的入口点。
+//
+
+#include<iostream>  
+#include<cstring>  
+#include<string>  
+#include<memory>  
+
 using namespace std;
 
-int main() {
-	string s1,s;
-	cin >> s;
-	cout << s<<endl;
-	while (getline(cin, s1))//从is中读取一行赋值s
+class Simple
+{
+public:
+	Simple(int p = 0)
 	{
-		
-		cout << s1<< endl;//line中不包含换行符需手动加入endl
-	} 
-	cin.get();
+		number = p;
+		std::cout << "Simple::" << number << std::endl;
+	}
+
+	~Simple()
+	{
+		std::cout << "~Simple::" << number << std::endl;
+	}
+
+	void PrintSomething()
+	{
+		std::cout << "PrintSomething:" << info_extend.c_str() << std::endl;
+	}
+
+	std::string info_extend;
+	int number;
+};
+
+void TestSharedPtr()
+{
+	std::shared_ptr<Simple> my_memory(new Simple(1));//my_memory 为指向Simple的智能指针 
+	if (my_memory.get())
+	{
+		my_memory->PrintSomething();
+
+		my_memory.get()->info_extend = "Additon";	//返回p中保存的指针
+		my_memory->PrintSomething();
+
+		(*my_memory).info_extend += "other";
+		my_memory->PrintSomething();
+	}
+
 }
+//std::shared_ptr<string> 
+
+int main()
+{
+	TestSharedPtr();
+	shared_ptr<int> pi=make_shared<int> (34);	//初始化方法
+	
+	cout <<pi.use_count()<<endl<<pi<<endl;
+	cin.get();
+	return 0;
+}
+# Auto detect text files and perform LF normalization
+* text=auto
